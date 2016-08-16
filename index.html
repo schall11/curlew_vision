@@ -556,7 +556,7 @@
                 id: "tracks"
             });
             var legendLayer = new FeatureLayer({
-                url: '//services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Tracked_Pelicans/FeatureServer'
+                url: 'https://services.arcgis.com/ZzrwjTRez6FJiOq4/arcgis/rest/services/Tracked_Pelicans/FeatureServer'
 
             });
             var gLayerMRP = new GraphicsLayer({
@@ -566,13 +566,13 @@
                 id: "mrp"
             });
             var mrp = new FeatureLayer({
-                url: 'http://maps.dnr.utah.gov:6080/arcgis/rest/services/DWR/Argos_Curlew/MapServer/1',
+                url: 'https://dwrmapserv.utah.gov/arcgis/rest/services/ARGOS/ARGOS_Curlew/MapServer/1',
                 outFields: ["*"],
                 id: "mrpMain",
                 renderer: rendererPtsMRP
             });
             var fl = new FeatureLayer({
-                url: "http://maps.dnr.utah.gov:6080/arcgis/rest/services/DWR/Argos_Curlew/MapServer/0",
+                url: "https://dwrmapserv.utah.gov/arcgis/rest/services/ARGOS/ARGOS_Curlew/MapServer/0",
                 outFields: ["*"],
                 id: 'dataPts',
                 renderer: rendererPts
