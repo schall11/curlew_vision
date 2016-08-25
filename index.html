@@ -116,7 +116,7 @@
 
         .ranges li {
             color: black;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 400;
         }
     #panelInfoBox {
@@ -161,6 +161,11 @@
            color:white;
            background-color: blue;
        }*/
+        @media (min-width: 564px){
+.daterangepicker .ranges ul {
+    width: inherit;
+
+}}
     </style>
 
 </head>
@@ -251,6 +256,13 @@
 
 
                                 <form class="form" role="form" style="padding-top:20px; display:inline-block !important">
+
+                                    <!-- form group [rows] -->
+                                    <div style="margin-bottom:5px;"><b>Filter by Date:</b></div>
+                                    <div class="form-group">
+
+                                        <input type="button" class="form-control input-sm" id="daterange">
+                                    </div>
                                     <div style="margin-bottom:5px;"><b>Filter by Name:</b></div>
                                     <div id="nameGrp" class="form-group">
 
@@ -276,12 +288,6 @@
                                                     <option value="Loretta">Loretta</option>
                                                     <option value="Manuel">Manuel</option>-->
                                                  </select>
-                                    </div>
-                                    <!-- form group [rows] -->
-                                    <div style="margin-bottom:5px;"><b>Filter by Date:</b></div>
-                                    <div class="form-group">
-
-                                        <input type="button" class="form-control input-sm btn-default" id="daterange">
                                     </div>
                                     <!-- form group [search] -->
                                     <div class="form-group">
@@ -395,62 +401,8 @@
         var endDate = moment();
         /*var names_all = ["Abigail", "Annabelle", "Barnabus", "Bartholomew", "Cecilia", "Chester", "Daphne", "Derek", "Eleanor", "Everett", "Finnigan", "Flagg", "George", "Gerald", "Hector", "Indie", "Jerome", "Kirk", "Loretta","Manuel"];*/
         var names_all = [];
-        var name_colors = [
-            [166, 206, 227],
-            [31, 120, 180],
-            [178, 223, 138],
-            [51, 160, 44],
-            [255, 86, 153],
-            [227, 26, 28],
-            [253, 191, 111],
-            [255, 127, 0],
-            [202, 178, 214],
-            [56, 61, 211],
-            [251, 154, 153],
-            [177, 89, 40],
-            [86, 90, 153],
-            [204, 80, 25],
-            [117, 255, 0],
-            [237, 142, 255],
-            [123, 178, 151],
-            [255, 236, 191],
-            [187, 65, 201],
-            [203, 54, 126],
-            [102, 202, 234],
-            [230, 120, 120],
-            [102, 189, 202],
-            [95, 95, 215],
-            [250, 65, 140],
-            [250, 165, 105],
-            [175, 205, 120],
-            [0, 154, 45],
-            [50, 204, 120],
-            [67, 80, 255],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0],
-            [0, 255, 0]
-
-        ];
+        var names_all2 = [];
+        
 
         function isInArray(value, array) {
             return array.indexOf(value) > -1;
@@ -622,21 +574,27 @@
                             $.each(results, function(index, value) {
                                 var attributes = value.attributes;
                                 var name = attributes.name;
-                                console.log(name);
-                                names_all.push(name);
+                                var color = attributes.color;
+//                                console.log(name);
+                                var tList = [];
+                                tList.push(name);
+                                names_all2.push(name);
+                                tList.push(color);
+                                names_all.push(tList);
+//                                names_all.push(name);
                                 names_all.sort();
                             });
                             /*$('#nameselect').append("<option value='" + name+ "'>" + name + "</option>");*/
 
                         });
                         for (var n = 0; n < names_all.length; n++) {
-                            dict[names_all[n]] = name_colors[n];
+                            dict[names_all[n][0]] = names_all[n][1];
                             $('#nameselect').append($('<option/>', {
-                                    value: names_all[n],
-                                    text: names_all[n]
+                                    value: names_all[n][0],
+                                    text: names_all[n][0]
                                 }));
                         }
-                        console.log(dict);
+//                        console.log(dict);
                         for (i in dict) {
                             rendererPts.addUniqueValueInfo(i,
                                 new SimpleMarkerSymbol({
@@ -954,16 +912,24 @@
                         autoApply: true,
                         startDate: moment().subtract(7, 'days'),
                         endDate: moment(),
-                        minDate: "08/10/2015",
+                        minDate: "01/01/2013",
                         maxDate: moment(),
                         parentEl: $("#filtercont"),
                         ranges: {
                             'Last 7 Days': [moment().subtract(7, 'days'), moment()],
-                            'Last 14 Days': [moment().subtract(14, 'days'), moment()],
-                            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                            'Last 90 Days': [moment().subtract(3, 'months'), moment()],
-                            'Last Year': [moment().subtract(1, 'year'), moment()],
-                            'Show All Data': ["08/10/2015", moment()]
+                            'Northbound Migration 2014': ["03/01/2014","04/25/2014"],
+                            'Breeding 2014': ["04/26/2014","06/10/2014"],
+                            'Southbound Migration 2014': ["06/11/2014","08/05/2014"],
+                            'Non-breeding 2014': ["08/06/2014","02/28/2015"],
+                            'Northbound Migration 2015': ["03/01/2015","04/25/2015"],
+                            'Breeding 2015': ["04/26/2015","06/10/2015"],
+                            'Southbound Migration 2015': ["06/11/2015","08/05/2015"],
+                            'Non-breeding 2015': ["08/06/2015","02/28/2016"],
+                            'Northbound Migration 2016': ["03/01/2016","04/25/2016"],
+                            'Breeding 2016': ["04/26/2016","06/10/2016"],
+                            'Southbound Migration 2016': ["06/11/2016","08/05/2016"],
+                            'Non-breeding 2016': ["08/06/2016",moment()],
+                            'Show All Data': ["05/07/2013", moment()]
                         },
                         drops: 'down',
                         opens: "center"
@@ -984,7 +950,7 @@
                     var txt = $(e.target).text();
                     var target = e.target;
                     /*if (isInArray(txt,names_all)){*/
-                    if (isInArray(txt,names_all)){
+                    if (isInArray(txt,names_all2)){
                         removeHighlight();
                         $(target).addClass('highlight');
 
